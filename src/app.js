@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import userRoute from "./routes/userRoute.js";
+import authRoute from "./routes/authRoute.js";
 import eventRoute from "./routes/eventRoute.js";
 import registrationRoute from "./routes/registrationRoute.js";
 import errorMiddleware from "./middleware/errorMiddleware.js";
@@ -8,6 +8,7 @@ import staffRoute from "./routes/staffRoute.js";
 import adminRoute from "./routes/adminRoutes.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./config/swagger.js";
+import limiter from "./middleware/limiter.js";
 
 dotenv.config();
 
@@ -19,7 +20,7 @@ app.use(express.json());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Authentication routes
-app.use("/api/user", userRoute);
+app.use("/api/user", limiter, authRoute);
 
 // Event routes
 app.use("/api/events", eventRoute);
