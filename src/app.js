@@ -1,3 +1,4 @@
+import cors from "cors";
 import express from "express";
 import dotenv from "dotenv";
 import authRoute from "./routes/authRoute.js";
@@ -13,6 +14,13 @@ import limiter from "./middleware/limiter.js";
 dotenv.config();
 
 const app = express();
+
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "https://planit-inky-alpha.vercel.app"],
+    credentials: true,
+  }),
+);
 
 app.use(express.json());
 
